@@ -23,7 +23,7 @@ class BookRepositories
         return $this->book->orderBy('created_at', 'desc')->get();
     }
 
-    public function store()
+    public function store($request)
     {
 
     }

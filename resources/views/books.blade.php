@@ -1,31 +1,30 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+@extends('layout')
 
-    <title>test repositoy</title>
+@section('content')
+    <div class="container">
+        <div>
+            <a href="{{route('books.create')}}" target="_blank" class="btn btn-outline-success col-12 text-center m-4">ایجاد کتاب</a>
+        </div>
+        <div class="row p-3">
 
-
-</head>
-<body>
-<div class="container">
-    <div class="row">
-        @foreach($books as $key=>$book)
-            <div class="col-4 text-center border mb-3 p-2">
-                <span> {{$key+1}}) - book name : {{$book->name}}</span>
-                <hr>
-                <img src="{{$book->image}}" alt="{{$book->name}}">
-            </div>
-        @endforeach
+            @foreach($books as $key=>$book)
+                <div class="col-4 text-center border mb-3 p-2">
+                    <span> {{$key+1}}) - book name : {{$book->name}}</span>
+                    <hr>
+                    <img src="{{asset($book->getFirstMediaUrl('books'))}}" class="w-100" alt="{{$book->name}}">
+                    <hr>
+                    <span>size of the pic is: {{$book->getFirstMedia('books')->human_readable_size}}</span>
+                    <hr>
+                    <div class="row m-2">
+                        <form action="{{route('books.destroy',$book->id)}}" class="col-6" method="post">
+                            @csrf
+                            @method('delete')
+                                 <button type="submit" class="btn btn-danger col-12">حذف</button>
+                        </form>
+                    <a href="{{route('books.edit',$book->id)}}" class="btn btn-warning col-6">ویرایش</a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
-</div>
-
-
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
-</html>
+@endsection
