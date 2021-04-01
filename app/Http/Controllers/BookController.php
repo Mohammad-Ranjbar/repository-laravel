@@ -10,6 +10,13 @@ class BookController extends Controller
 {
 
 
+    public function deleteImage($id, $key)
+    {
+
+        $book = Book::findOrFail($id);
+        $images = $book->getMedia('book_images')[$key]->delete();
+        return back();
+    }
 
     /**
      * Display a listing of the resource.
@@ -42,12 +49,14 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-
         $data['name'] = $request->name;
         $data['code'] = $request->code;
         $book = Book::create($data);
 
         $book->addMedia($request->image)->toMediaCollection('books');
+        foreach ($request->images as $image) {
+            $book->addMedia($image)->toMediaCollection('book_images');
+        }
         return redirect(route('books.index'));
     }
 

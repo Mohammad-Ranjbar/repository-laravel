@@ -11,7 +11,7 @@
                 <div class="col-4 text-center border mb-3 p-2">
                     <span> {{$key+1}}) - book name : {{$book->name}}</span>
                     <hr>
-                    <img src="{{asset($book->getFirstMediaUrl('books'))}}" class="w-100" alt="{{$book->name}}">
+                    <img src="{{asset($book->getFirstMediaUrl('books'))}}" class="w-100" width="250px" height="250px" alt="{{$book->name}}">
                     <hr>
                     <span>size of the pic is: {{$book->getFirstMedia('books')->human_readable_size}}</span>
                     <hr>

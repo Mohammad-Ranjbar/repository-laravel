@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/',function (){
+Route::get('/', function () {
     return redirect(\route('books.index'));
 });
-Route::resource('books',\App\Http\Controllers\BookController::class);
+Route::resource('books', \App\Http\Controllers\BookController::class);
 
+Route::get('delete-image/{id}/{key}', [\App\Http\Controllers\BookController::class, 'deleteImage'])->name('delete-image');

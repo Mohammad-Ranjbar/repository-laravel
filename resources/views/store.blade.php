@@ -17,15 +17,19 @@
                     <input type="text" class="form-control" name="code" id="code" placeholder="کد کتاب...">
                 </div>
                 <div class="form-group col-6">
-                    <label for="image">تصویر کتاب</label>
+                    <label for="image">تصویر شاخص کتاب</label>
                     <input type="file" class="form-control" name="image" id="image">
                 </div>
 
+                    <div class="form-group col-6">
+                        <label for="images">تصاویر کتاب</label>
+                        <input type="file" class="form-control" name="images[]" multiple id="images">
+                    </div>
+
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">ثبت</button>
             </form>
-
     </div>
 
 
