@@ -16,6 +16,10 @@
                     <label for="code">کد کتاب</label>
                     <input type="text" class="form-control" name="code" id="code" placeholder="کد کتاب...">
                 </div>
+                    <div class="form-group col-12">
+                    <label for="link">لینک تصویر کتاب</label>
+                    <input type="text" class="form-control" name="link" id="link" placeholder="لینک تصویر کتاب...">
+                </div>
                 <div class="form-group col-6">
                     <label for="image">تصویر شاخص کتاب</label>
                     <input type="file" class="form-control" name="image" id="image">

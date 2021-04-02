@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Repositories\BookRepositories;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -25,8 +26,9 @@ class BookController extends Controller
      */
     public function index()
     {
-//        $books = Book::all();
         $books = Book::all();
+//        $books = Book::groupBy('code')->get();
+//        $books = DB::table('books')->select('code' , DB::raw('count(*) as total'))->groupBy('code')->get();
 
         return view('books', compact('books'));
     }
@@ -52,10 +54,19 @@ class BookController extends Controller
         $data['name'] = $request->name;
         $data['code'] = $request->code;
         $book = Book::create($data);
+        if ($request->hasFile('image')) {
+            $book->addMedia($request->image)
+                ->usingFileName(time() . '-' . str_replace('_', '-', $request->image->getClientOriginalName()))
+                ->toMediaCollection('books');
+        }
+        if (isset($request->link)) {
+            $book->addMediaFromUrl($request->link)->toMediaCollection('book_url');
 
-        $book->addMedia($request->image)->toMediaCollection('books');
-        foreach ($request->images as $image) {
-            $book->addMedia($image)->toMediaCollection('book_images');
+        }
+        if (isset($request->images)) {
+            foreach ($request->images as $image) {
+                $book->addMedia($image)->toMediaCollection('book_images');
+            }
         }
         return redirect(route('books.index'));
     }
@@ -99,9 +110,16 @@ class BookController extends Controller
         if ($request->hasFile('image')) {
             $book->getFirstMedia('books')->delete();
             $book->addMedia($request->image)->toMediaCollection('books');
-
         }
-
+        if (isset($request->link)) {
+            $book->getFirstMedia('book_url')->delete();
+            $book->addMediaFromUrl($request->link)->toMediaCollection('book_url');
+        }
+        if (isset($request->images)) {
+            foreach ($request->images as $image) {
+                $book->addMedia($image)->toMediaCollection('book_images');
+            }
+        }
 
         return redirect(route('books.index'));
     }

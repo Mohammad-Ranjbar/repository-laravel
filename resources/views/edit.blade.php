@@ -20,6 +20,16 @@
                            value="{{$book->code}}">
                 </div>
                 <div class="form-group col-6">
+                    <label for="link">تصویر لینک کتاب</label>
+                    <input type="file" class="form-control" name="link" id="link">
+                </div>
+                <div class="col-6">
+                    <label>تصویر کنونی لینک کتاب</label>
+                    <br>
+                    <img src="{{asset($book->getFirstMediaUrl('book_url'))}}" class="w-100" width="250px" height="250px"
+                         alt="{{$book->name}}">
+                </div>
+                <div class="form-group col-6">
                     <label for="image">تصویر کتاب</label>
                     <input type="file" class="form-control" name="image" id="image">
                 </div>
